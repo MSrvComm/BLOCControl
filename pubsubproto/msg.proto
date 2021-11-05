@@ -1,0 +1,15 @@
+/* protoc -I=. --go_out=. msg.proto */
+syntax = "proto3";
+package pubsub;
+
+option go_package = "./";
+
+/* 
+ * 'action' can be publish on the server side, subscribe or unsubscribe on the client side
+ * 'svc' is the service which is the topic here
+ * a new msg needs to be sent for each service
+ */
+message Msg {
+    string action = 1;
+    string svc = 2;
+}

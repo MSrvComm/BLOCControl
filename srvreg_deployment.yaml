@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: srvreg
+  name: srvreg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: srvreg
+  template:
+    metadata:
+      labels:
+        app: srvreg
+    spec:
+      containers:
+      - image: ratnadeepb/srvreg:latest
+        imagePullPolicy: Always
+        name: srvreg
+        # ports:
+        # - containerPort: 5000
