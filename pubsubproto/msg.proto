@@ -2,7 +2,7 @@
 syntax = "proto3";
 package pubsub;
 
-option go_package = "./";
+option go_package = "./msg";
 
 /* 
  * 'action' can be publish on the server side, subscribe or unsubscribe on the client side
