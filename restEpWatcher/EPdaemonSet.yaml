@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  # namespace: micocontrol                                                                                                                         
-  labels:                                                                                                                                                                                                   
+  namespace: micocontrol                                                                                                                         
+  labels:                                                                                                                                                                                  
     app: epwatcher
   name: epwatcher
 spec:
