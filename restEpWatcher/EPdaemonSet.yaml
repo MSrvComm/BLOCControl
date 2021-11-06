@@ -1,21 +1,7 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: epwatcher
-spec:
-  ports:
-  - port: 62000
-    nodePort: 30000
-    protocol: TCP
-  selector:
-    app: epwatcher
-  type: NodePort
-
----
-
 apiVersion: apps/v1
 kind: DaemonSet
-metadata:                                                                                                                                           
+metadata:
+  # namespace: micocontrol                                                                                                                         
   labels:                                                                                                                                                                                                   
     app: epwatcher
   name: epwatcher
@@ -33,3 +19,5 @@ spec:
         name: epwatcher
         ports:
         - containerPort: 62000
+          hostPort: 62000
+      serviceAccountName: epwatcher-accnt
