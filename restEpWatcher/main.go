@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -188,10 +190,16 @@ func main() {
 	go controller.Run(1, stop)
 
 	http.HandleFunc("/", fetchSvc)
-	http.ListenAndServe(port, nil)
+	log.Fatal(http.ListenAndServe(port, nil))
+}
+
+type endpoint struct {
+	SvcName string
+	Ips     []string
 }
 
 func fetchSvc(w http.ResponseWriter, r *http.Request) {
 	s := strings.Split(r.URL.String(), "/")[1]
-	fmt.Fprint(w, ep_map[s])
+	ep := endpoint{SvcName: s, Ips: ep_map[s]}
+	json.NewEncoder(w).Encode(ep)
 }
