@@ -1,4 +1,4 @@
-module epwatcher
+module github.com/MSrvComm/MiCoControl
 
 go 1.17
 
