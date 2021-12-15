@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gorilla/mux"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/util/runtime"
@@ -190,27 +189,22 @@ func main() {
 	defer close(stop)
 	go controller.Run(1, stop)
 
-	// http.HandleFunc("/", fetchSvc)
-
-	router := mux.NewRouter()
-	router.PathPrefix("/").HandlerFunc(fetchSvc)
-
+	http.HandleFunc("/", fetchSvc)
+	log.Println("new router") // debug
+	// router := mux.NewRouter()
+	// router.PathPrefix("/").HandlerFunc(fetchSvc)
+	log.Println("listen and serve") // debug
+	// log.Fatal(http.ListenAndServe(port, router))
 	log.Fatal(http.ListenAndServe(port, nil))
 }
 
-type endpoint struct {
-	SvcName string
-	Ips     []string
+type Endpoint struct {
+	Svcname string   `json:"Svcname"`
+	Ips     []string `json:"Ips"`
 }
 
 func fetchSvc(w http.ResponseWriter, r *http.Request) {
-	sp := strings.Split(r.URL.String(), "/")
-	var s string
-	if len(sp) > 2 {
-		s = strings.Split(r.URL.String(), "/")[1]
-	} else {
-		return
-	}
-	ep := endpoint{SvcName: s, Ips: ep_map[s]}
+	sp := strings.Split(r.URL.String(), "/")[1]
+	ep := Endpoint{Svcname: sp, Ips: ep_map[sp]}
 	json.NewEncoder(w).Encode(ep)
 }
