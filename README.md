@@ -1,4 +1,4 @@
-# A simple control plane for MiCo
+# A simple control plane for BLOC
 
 ***This is still largely a work in progress***
 
